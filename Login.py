@@ -388,9 +388,9 @@ elif st.session_state.step == 3:
   else:
     barbie_html_img = '<div class="barbie-character" style="background: #ff69b4; display: flex; align-items: center; justify-content: center; font-size: 3rem;">👸</div>'
 
-  card_template = """
+  card_html = f"""
     <style>
-    .pink-aesthetic-card {
+    .pink-aesthetic-card {{
         background: linear-gradient(135deg, #ffc0cb 0%, #ffb6c1 50%, #ff9ebb 100%);
         border: 3px solid #ff69b4;
         border-radius: 25px;
@@ -399,15 +399,15 @@ elif st.session_state.step == 3:
         box-shadow: 0 15px 35px rgba(255, 105, 180, 0.35);
         position: relative;
         overflow: visible;
-    }
-    .pink-title {
+    }}
+    .pink-title {{
         font-family: 'Great Vibes', cursive;
         font-size: 3.5rem;
         color: #5c0632;
         margin: 5px 0;
         text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.6);
-    }
-    .pink-badge {
+    }}
+    .pink-badge {{
         background: rgba(255, 255, 255, 0.85);
         border: 2px solid #ff69b4;
         border-radius: 50px;
@@ -418,8 +418,8 @@ elif st.session_state.step == 3:
         font-size: 1.1rem;
         margin: 10px 0;
         box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    .barbie-character {
+    }}
+    .barbie-character {{
         position: absolute;
         right: -25px;
         top: -45px;
@@ -431,11 +431,11 @@ elif st.session_state.step == 3:
         object-fit: cover;
         background-color: #fff;
         z-index: 10;
-    }
+    }}
     </style>
     
     <div class="pink-aesthetic-card">
-        {barbie_img}
+        {barbie_html_img}
         <div style="font-size: 2.2rem; margin-bottom: 5px;">💖🎈✨</div>
         <div class="pink-title">Happy Birthday</div>
         <div class="pink-badge">💕 15th Birthday 💕</div><br>
@@ -445,9 +445,7 @@ elif st.session_state.step == 3:
         </p>
     </div>
     """
-  st.markdown(
-      card_template.format(barbie_img=barbie_html_img), unsafe_allow_html=True
-  )
+  st.markdown(card_html, unsafe_allow_html=True)
 
   st.markdown("<br>", unsafe_allow_html=True)
   col1, col2, col3 = st.columns([1, 2, 1])
