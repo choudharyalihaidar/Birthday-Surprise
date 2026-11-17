@@ -155,11 +155,9 @@ set_bg_local("Right.png")
 # Initialize Session State
 if "step" not in st.session_state:
   st.session_state.step = 1
-if "candle_blown" not in st.session_state:
-  st.session_state.candle_blown = False
 
-# Top Progress Indicator (Out of 5 steps)
-st.progress(st.session_state.step / 5)
+# Top Progress Indicator (Out of 4 steps)
+st.progress(st.session_state.step / 4)
 
 # ==========================================
 # STEP 1: WELCOME SCREEN
@@ -292,7 +290,7 @@ elif st.session_state.step == 2:
             <div id="score-board">Caught: <span id="count">0</span> / 5</div>
             <div id="win-banner">
                 <h2> Amazing! You Caught All 5 Hearts! </h2>
-                <p>Click the <b>"Next Step: Make a Wish "</b> button below to continue!</p>
+                <p>Click the <b>"Next Step: Celebration 💖"</b> button below to continue!</p>
             </div>
         </div>
 
@@ -371,74 +369,46 @@ elif st.session_state.step == 2:
 
   col1, col2, col3 = st.columns([1, 2, 1])
   with col2:
-    if st.button("Next Step: Make a Wish ", use_container_width=True):
+    if st.button("Next Step: Celebration 💖", use_container_width=True):
       st.session_state.step = 3
       st.rerun()
 
 # ==========================================
-# STEP 3: VIRTUAL CAKE & CANDLE WISH
+# STEP 3: PINK AESTHETIC TEMPLATE CARD WITH BARBIE IMAGE
 # ==========================================
 elif st.session_state.step == 3:
-  cake_emoji = "🎂🕯️" if not st.session_state.candle_blown else "🎂✨"
-  status_msg = (
-      "Close your eyes, make a pure wish in your heart, and blow out the"
-      " candle!"
-      if not st.session_state.candle_blown
-      else (
-          "Your wish has been sent to the stars! May Allah fulfill every dream"
-          " of yours. 🌟"
-      )
-  )
+  # Base64 encode barbie image if available locally, or fallback to placeholder/URL
+  barbie_img_path = "barbie.png"  # Aap apni image ka naam yahan likh sakte hain
+  barbie_html_img = ""
+  if Path(barbie_img_path).exists():
+    with open(barbie_img_path, "rb") as img_f:
+      b64_img = base64.b64encode(img_f.read()).decode()
+    barbie_html_img = f'<img src="data:image/png;base64,{b64_img}" class="barbie-character">'
+  else:
+    # Fallback default avatar/image if file not found locally yet
+    barbie_html_img = '<div class="barbie-character" style="background: #ff69b4; display: flex; align-items: center; justify-content: center; font-size: 3rem;">👸</div>'
 
   st.markdown(
       f"""
-        <div class="glass-card">
-            <span class="step-badge">MAKE A WISH</span>
-            <div style="font-size: 5.5rem; margin: 10px 0;">{cake_emoji}</div>
-            <div class="script-heading">Make a Birthday Wish</div>
-            <p class="body-text">{status_msg}</p>
-        </div>
-        """,
-      unsafe_allow_html=True,
-  )
-
-  col1, col2, col3 = st.columns([1, 2, 1])
-  with col2:
-    if not st.session_state.candle_blown:
-      if st.button(" Blow Out the Candle", use_container_width=True):
-        st.session_state.candle_blown = True
-        st.snow()
-        st.rerun()
-    else:
-      if st.button("Continue to Celebration ", use_container_width=True):
-        st.session_state.step = 4
-        st.rerun()
-
-# ==========================================
-# STEP 4: PINK AESTHETIC TEMPLATE CARD (Updated)
-# ==========================================
-elif st.session_state.step == 4:
-  st.markdown(
-      """
         <style>
-        .pink-aesthetic-card {
+        .pink-aesthetic-card {{
             background: linear-gradient(135deg, #ffc0cb 0%, #ffb6c1 50%, #ff9ebb 100%);
             border: 3px solid #ff69b4;
             border-radius: 25px;
-            padding: 30px 20px;
+            padding: 35px 25px;
             text-align: center;
             box-shadow: 0 15px 35px rgba(255, 105, 180, 0.35);
             position: relative;
-            overflow: hidden;
+            overflow: visible;
         }
-        .pink-title {
+        .pink-title {{
             font-family: 'Great Vibes', cursive;
             font-size: 3.5rem;
             color: #5c0632;
             margin: 5px 0;
             text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.6);
-        }
-        .pink-badge {
+        }}
+        .pink-badge {{
             background: rgba(255, 255, 255, 0.85);
             border: 2px solid #ff69b4;
             border-radius: 50px;
@@ -449,11 +419,25 @@ elif st.session_state.step == 4:
             font-size: 1.1rem;
             margin: 10px 0;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }}
+        .barbie-character {{
+            position: absolute;
+            right: -25px;
+            top: -45px;
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            border: 4px solid #fff;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+            object-fit: cover;
+            background-color: #fff;
+            z-index: 10;
         }
         </style>
         
         <div class="pink-aesthetic-card">
-            <div style="font-size: 2.5rem; margin-bottom: 5px;">💖🎈✨</div>
+            {barbie_html_img}
+            <div style="font-size: 2.2rem; margin-bottom: 5px;">💖🎈✨</div>
             <div class="pink-title">Happy Birthday</div>
             <div class="pink-badge">💕 15th Birthday 💕</div><br>
             <div class="pink-badge">💕 Wishes for you 💕</div>
@@ -468,14 +452,14 @@ elif st.session_state.step == 4:
   st.markdown("<br>", unsafe_allow_html=True)
   col1, col2, col3 = st.columns([1, 2, 1])
   with col2:
-    if st.button("Read Final Keepsake Card ", use_container_width=True):
-      st.session_state.step = 5
+    if st.button("Read Final Keepsake Card ✨", use_container_width=True):
+      st.session_state.step = 4
       st.rerun()
 
 # ==========================================
-# STEP 5: ANTIQUE KEEPSAKE CARD & PRAYER
+# STEP 4: ANTIQUE KEEPSAKE CARD & PRAYER
 # ==========================================
-elif st.session_state.step == 5:
+elif st.session_state.step == 4:
   st.markdown(
       """
         <div class="antique-card">
@@ -500,5 +484,4 @@ elif st.session_state.step == 5:
   with col2:
     if st.button("🔄 Replay Surprise", use_container_width=True):
       st.session_state.step = 1
-      st.session_state.candle_blown = False
       st.rerun()
