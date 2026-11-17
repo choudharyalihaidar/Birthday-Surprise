@@ -382,69 +382,71 @@ elif st.session_state.step == 3:
   if Path(barbie_img_path).exists():
     with open(barbie_img_path, "rb") as img_f:
       b64_img = base64.b64encode(img_f.read()).decode()
-    barbie_html_img = f'<img src="data:image/png;base64,{b64_img}" class="barbie-character">'
+    barbie_html_img = (
+        f'<img src="data:image/png;base64,{b64_img}" class="barbie-character">'
+    )
   else:
     barbie_html_img = '<div class="barbie-character" style="background: #ff69b4; display: flex; align-items: center; justify-content: center; font-size: 3rem;">👸</div>'
 
+  card_template = """
+    <style>
+    .pink-aesthetic-card {
+        background: linear-gradient(135deg, #ffc0cb 0%, #ffb6c1 50%, #ff9ebb 100%);
+        border: 3px solid #ff69b4;
+        border-radius: 25px;
+        padding: 35px 25px;
+        text-align: center;
+        box-shadow: 0 15px 35px rgba(255, 105, 180, 0.35);
+        position: relative;
+        overflow: visible;
+    }
+    .pink-title {
+        font-family: 'Great Vibes', cursive;
+        font-size: 3.5rem;
+        color: #5c0632;
+        margin: 5px 0;
+        text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.6);
+    }
+    .pink-badge {
+        background: rgba(255, 255, 255, 0.85);
+        border: 2px solid #ff69b4;
+        border-radius: 50px;
+        padding: 10px 25px;
+        display: inline-block;
+        font-weight: 700;
+        color: #5c0632;
+        font-size: 1.1rem;
+        margin: 10px 0;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .barbie-character {
+        position: absolute;
+        right: -25px;
+        top: -45px;
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        border: 4px solid #fff;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+        object-fit: cover;
+        background-color: #fff;
+        z-index: 10;
+    }
+    </style>
+    
+    <div class="pink-aesthetic-card">
+        {barbie_img}
+        <div style="font-size: 2.2rem; margin-bottom: 5px;">💖🎈✨</div>
+        <div class="pink-title">Happy Birthday</div>
+        <div class="pink-badge">💕 15th Birthday 💕</div><br>
+        <div class="pink-badge">💕 Wishes for you 💕</div>
+        <p style="color: #5c0632; font-weight: 600; margin-top: 15px; font-size: 1.05rem;">
+            May your day be filled with sweet moments, endless joy, and wonderful surprises!
+        </p>
+    </div>
+    """
   st.markdown(
-      f"""
-        <style>
-        .pink-aesthetic-card {{
-            background: linear-gradient(135deg, #ffc0cb 0%, #ffb6c1 50%, #ff9ebb 100%);
-            border: 3px solid #ff69b4;
-            border-radius: 25px;
-            padding: 35px 25px;
-            text-align: center;
-            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.35);
-            position: relative;
-            overflow: visible;
-        }}
-        .pink-title {{
-            font-family: 'Great Vibes', cursive;
-            font-size: 3.5rem;
-            color: #5c0632;
-            margin: 5px 0;
-            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.6);
-        }}
-        .pink-badge {{
-            background: rgba(255, 255, 255, 0.85);
-            border: 2px solid #ff69b4;
-            border-radius: 50px;
-            padding: 10px 25px;
-            display: inline-block;
-            font-weight: 700;
-            color: #5c0632;
-            font-size: 1.1rem;
-            margin: 10px 0;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }}
-        .barbie-character {{
-            position: absolute;
-            right: -25px;
-            top: -45px;
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-            border: 4px solid #fff;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-            object-fit: cover;
-            background-color: #fff;
-            z-index: 10;
-        }
-        </style>
-        
-        <div class="pink-aesthetic-card">
-            {barbie_html_img}
-            <div style="font-size: 2.2rem; margin-bottom: 5px;">💖🎈✨</div>
-            <div class="pink-title">Happy Birthday</div>
-            <div class="pink-badge">💕 15th Birthday 💕</div><br>
-            <div class="pink-badge">💕 Wishes for you 💕</div>
-            <p style="color: #5c0632; font-weight: 600; margin-top: 15px; font-size: 1.05rem;">
-                May your day be filled with sweet moments, endless joy, and wonderful surprises!
-            </p>
-        </div>
-        """,
-      unsafe_allow_html=True,
+      card_template.format(barbie_img=barbie_html_img), unsafe_allow_html=True
   )
 
   st.markdown("<br>", unsafe_allow_html=True)
