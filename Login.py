@@ -377,7 +377,7 @@ elif st.session_state.step == 2:
 # STEP 3: PINK AESTHETIC TEMPLATE CARD WITH BARBIE IMAGE
 # ==========================================
 elif st.session_state.step == 3:
-  barbie_img_path = "barbie.png"
+  barbie_img_path = "Barbie.png"
   barbie_html_img = ""
   if Path(barbie_img_path).exists():
     with open(barbie_img_path, "rb") as img_f:
@@ -439,10 +439,6 @@ elif st.session_state.step == 3:
         <div style="font-size: 2.2rem; margin-bottom: 5px;">💖🎈✨</div>
         <div class="pink-title">Happy Birthday</div>
         <div class="pink-badge">💕 15th Birthday 💕</div><br>
-        <div class="pink-badge">💕 Wishes for you 💕</div>
-        <p style="color: #5c0632; font-weight: 600; margin-top: 15px; font-size: 1.05rem;">
-            May your day be filled with sweet moments, endless joy, and wonderful surprises!
-        </p>
     </div>
     """
   st.markdown(card_html, unsafe_allow_html=True)
@@ -450,7 +446,7 @@ elif st.session_state.step == 3:
   st.markdown("<br>", unsafe_allow_html=True)
   col1, col2, col3 = st.columns([1, 2, 1])
   with col2:
-    if st.button("Read Final Keepsake Card ✨", use_container_width=True):
+    if st.button("💕 Wishes for you 💕", use_container_width=True):
       st.session_state.step = 4
       st.rerun()
 
