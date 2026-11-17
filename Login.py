@@ -377,15 +377,13 @@ elif st.session_state.step == 2:
 # STEP 3: PINK AESTHETIC TEMPLATE CARD WITH BARBIE IMAGE
 # ==========================================
 elif st.session_state.step == 3:
-  # Base64 encode barbie image if available locally, or fallback to placeholder/URL
-  barbie_img_path = "barbie.png"  # Aap apni image ka naam yahan likh sakte hain
+  barbie_img_path = "barbie.png"
   barbie_html_img = ""
   if Path(barbie_img_path).exists():
     with open(barbie_img_path, "rb") as img_f:
       b64_img = base64.b64encode(img_f.read()).decode()
     barbie_html_img = f'<img src="data:image/png;base64,{b64_img}" class="barbie-character">'
   else:
-    # Fallback default avatar/image if file not found locally yet
     barbie_html_img = '<div class="barbie-character" style="background: #ff69b4; display: flex; align-items: center; justify-content: center; font-size: 3rem;">👸</div>'
 
   st.markdown(
@@ -400,7 +398,7 @@ elif st.session_state.step == 3:
             box-shadow: 0 15px 35px rgba(255, 105, 180, 0.35);
             position: relative;
             overflow: visible;
-        }
+        }}
         .pink-title {{
             font-family: 'Great Vibes', cursive;
             font-size: 3.5rem;
