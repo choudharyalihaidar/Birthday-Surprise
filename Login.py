@@ -1,11 +1,12 @@
+import base64
+from pathlib import Path
 import streamlit as st
 import streamlit.components.v1 as components
-from pathlib import Path
 
 # Page Configuration
 st.set_page_config(
-    page_title="Happy Birthday Surprise ✨",
-    page_icon="🎂",
+    page_title="Happy Birthday Surprise ",
+    page_icon="",
     layout="centered",
     initial_sidebar_state="collapsed",
 )
@@ -128,14 +129,14 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+
 # Set Background Image directly via CSS injection with base64/local file check
-import base64
 def set_bg_local(image_file):
-    if Path(image_file).exists():
-        with open(image_file, "rb") as f:
-            data = f.read()
-        encoded = base64.b64encode(data).decode()
-        css = f"""
+  if Path(image_file).exists():
+    with open(image_file, "rb") as f:
+      data = f.read()
+    encoded = base64.b64encode(data).decode()
+    css = f"""
         <style>
         .stApp {{
             background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("data:image/png;base64,{encoded}");
@@ -146,15 +147,16 @@ def set_bg_local(image_file):
         }}
         </style>
         """
-        st.markdown(css, unsafe_allow_html=True)
+    st.markdown(css, unsafe_allow_html=True)
+
 
 set_bg_local("Right.png")
 
 # Initialize Session State
 if "step" not in st.session_state:
-    st.session_state.step = 1
+  st.session_state.step = 1
 if "candle_blown" not in st.session_state:
-    st.session_state.candle_blown = False
+  st.session_state.candle_blown = False
 
 # Top Progress Indicator (Out of 5 steps)
 st.progress(st.session_state.step / 5)
@@ -163,11 +165,12 @@ st.progress(st.session_state.step / 5)
 # STEP 1: WELCOME SCREEN
 # ==========================================
 if st.session_state.step == 1:
-    st.markdown(
-        """
+  st.markdown(
+      """
         <div class="glass-card">
             <span class="step-badge">WELCOME</span>
             <div class="script-heading">Happy Birthday to You</div>
+            <div style="font-family: 'Great Vibes', cursive; font-size: 2rem; color: #102542; font-weight: 600; margin: 5px 0;">Dear My Sister</div>
             <div class="sub-heading">On Ur 15th Birthday</div>
             <p class="body-text">
                 Today isn't just an ordinary day—the world became a little brighter on this exact date.<br>
@@ -176,20 +179,20 @@ if st.session_state.step == 1:
             <p style="color: #8a5a00; font-weight: 600; font-size: 0.92rem;">Are you ready to unlock your birthday surprise?</p>
         </div>
         """,
-        unsafe_allow_html=True,
-    )
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
-        if st.button("Start Your Surprise ✨", use_container_width=True):
-            st.session_state.step = 2
-            st.rerun()
+      unsafe_allow_html=True,
+  )
+  col1, col2, col3 = st.columns([1, 2, 1])
+  with col2:
+    if st.button("Start Your Surprise ", use_container_width=True):
+      st.session_state.step = 2
+      st.rerun()
 
 # ==========================================
 # STEP 2: REAL FLYING HEARTS CATCHING GAME
 # ==========================================
 elif st.session_state.step == 2:
-    st.markdown(
-        """
+  st.markdown(
+      """
         <div class="glass-card" style="padding: 25px 20px; margin-bottom: 10px;">
             <span class="step-badge">MINI GAME</span>
             <div class="script-heading" style="font-size: 2.8rem;">Catch 5 Flying Hearts</div>
@@ -198,10 +201,10 @@ elif st.session_state.step == 2:
             </p>
         </div>
         """,
-        unsafe_allow_html=True,
-    )
+      unsafe_allow_html=True,
+  )
 
-    flying_game_html = """
+  flying_game_html = """
     <!DOCTYPE html>
     <html>
     <head>
@@ -288,8 +291,8 @@ elif st.session_state.step == 2:
         <div id="game-arena">
             <div id="score-board">Caught: <span id="count">0</span> / 5</div>
             <div id="win-banner">
-                <h2>🎉 Amazing! You Caught All 5 Hearts! 🎉</h2>
-                <p>Click the <b>"Next Step: Make a Wish 🎂"</b> button below to continue!</p>
+                <h2> Amazing! You Caught All 5 Hearts! </h2>
+                <p>Click the <b>"Next Step: Make a Wish "</b> button below to continue!</p>
             </div>
         </div>
 
@@ -299,7 +302,7 @@ elif st.session_state.step == 2:
             const winBanner = document.getElementById('win-banner');
             let caught = 0;
             const totalHearts = 5;
-            const heartIcons = ['💖', '💗', '💓', '💞', '💝'];
+            const heartIcons = ['❤️', '💖', '💘', '💕', '💓'];
             const hearts = [];
 
             for (let i = 0; i < totalHearts; i++) {
@@ -326,7 +329,7 @@ elif st.session_state.step == 2:
 
                     const pop = document.createElement('div');
                     pop.className = 'pop-effect';
-                    pop.innerText = 'Caught! ✨';
+                    pop.innerText = 'Caught! 🎉';
                     pop.style.left = obj.x + 'px';
                     pop.style.top = obj.y + 'px';
                     arena.appendChild(pop);
@@ -364,27 +367,31 @@ elif st.session_state.step == 2:
     </html>
     """
 
-    components.html(flying_game_html, height=345)
+  components.html(flying_game_html, height=345)
 
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
-        if st.button("Next Step: Make a Wish 🎂", use_container_width=True):
-            st.session_state.step = 3
-            st.rerun()
+  col1, col2, col3 = st.columns([1, 2, 1])
+  with col2:
+    if st.button("Next Step: Make a Wish ", use_container_width=True):
+      st.session_state.step = 3
+      st.rerun()
 
 # ==========================================
 # STEP 3: VIRTUAL CAKE & CANDLE WISH
 # ==========================================
 elif st.session_state.step == 3:
-    cake_emoji = "🎂" if not st.session_state.candle_blown else "🍰✨"
-    status_msg = (
-        "Close your eyes, make a pure wish in your heart, and blow out the candle!"
-        if not st.session_state.candle_blown
-        else "Your wish has been sent to the stars! May Allah fulfill every dream of yours. 🤲✨"
-    )
+  cake_emoji = "🎂🕯️" if not st.session_state.candle_blown else "🎂✨"
+  status_msg = (
+      "Close your eyes, make a pure wish in your heart, and blow out the"
+      " candle!"
+      if not st.session_state.candle_blown
+      else (
+          "Your wish has been sent to the stars! May Allah fulfill every dream"
+          " of yours. 🌟"
+      )
+  )
 
-    st.markdown(
-        f"""
+  st.markdown(
+      f"""
         <div class="glass-card">
             <span class="step-badge">MAKE A WISH</span>
             <div style="font-size: 5.5rem; margin: 10px 0;">{cake_emoji}</div>
@@ -392,55 +399,85 @@ elif st.session_state.step == 3:
             <p class="body-text">{status_msg}</p>
         </div>
         """,
-        unsafe_allow_html=True,
-    )
+      unsafe_allow_html=True,
+  )
 
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
-        if not st.session_state.candle_blown:
-            if st.button("💨 Blow Out the Candle", use_container_width=True):
-                st.session_state.candle_blown = True
-                st.snow()
-                st.rerun()
-        else:
-            if st.button("Continue to Celebration ✨", use_container_width=True):
-                st.session_state.step = 4
-                st.rerun()
+  col1, col2, col3 = st.columns([1, 2, 1])
+  with col2:
+    if not st.session_state.candle_blown:
+      if st.button(" Blow Out the Candle", use_container_width=True):
+        st.session_state.candle_blown = True
+        st.snow()
+        st.rerun()
+    else:
+      if st.button("Continue to Celebration ", use_container_width=True):
+        st.session_state.step = 4
+        st.rerun()
 
 # ==========================================
-# STEP 4: HEARTFELT MESSAGE & REASONS
+# STEP 4: PINK AESTHETIC TEMPLATE CARD (Updated)
 # ==========================================
 elif st.session_state.step == 4:
-    st.markdown(
-        """
-        <div class="glass-card">
-            <span class="step-badge">CELEBRATING YOU</span>
-            <div class="script-heading">Happy 15th Birthday!</div>
-            <p class="body-text">
-                You bring kindness, warmth, and positivity wherever you go. Today is all about celebrating the wonderful person you are.
+  st.markdown(
+      """
+        <style>
+        .pink-aesthetic-card {
+            background: linear-gradient(135deg, #ffc0cb 0%, #ffb6c1 50%, #ff9ebb 100%);
+            border: 3px solid #ff69b4;
+            border-radius: 25px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.35);
+            position: relative;
+            overflow: hidden;
+        }
+        .pink-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.5rem;
+            color: #5c0632;
+            margin: 5px 0;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.6);
+        }
+        .pink-badge {
+            background: rgba(255, 255, 255, 0.85);
+            border: 2px solid #ff69b4;
+            border-radius: 50px;
+            padding: 10px 25px;
+            display: inline-block;
+            font-weight: 700;
+            color: #5c0632;
+            font-size: 1.1rem;
+            margin: 10px 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        </style>
+        
+        <div class="pink-aesthetic-card">
+            <div style="font-size: 2.5rem; margin-bottom: 5px;">💖🎈✨</div>
+            <div class="pink-title">Happy Birthday</div>
+            <div class="pink-badge">💕 15th Birthday 💕</div><br>
+            <div class="pink-badge">💕 Wishes for you 💕</div>
+            <p style="color: #5c0632; font-weight: 600; margin-top: 15px; font-size: 1.05rem;">
+                May your day be filled with sweet moments, endless joy, and wonderful surprises!
             </p>
-            <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin: 20px 0;">
-                <span style="background: #102542; color: #f6ca7d; padding: 8px 18px; border-radius: 20px; font-weight: 600; border: 1px solid #d4af37;">💙 Endless Smiles</span>
-                <span style="background: #102542; color: #f6ca7d; padding: 8px 18px; border-radius: 20px; font-weight: 600; border: 1px solid #d4af37;">✨ Pure Happiness</span>
-                <span style="background: #102542; color: #f6ca7d; padding: 8px 18px; border-radius: 20px; font-weight: 600; border: 1px solid #d4af37;">🌟 Always Blessed</span>
-            </div>
         </div>
         """,
-        unsafe_allow_html=True,
-    )
+      unsafe_allow_html=True,
+  )
 
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
-        if st.button("Read Final Keepsake Card 📜", use_container_width=True):
-            st.session_state.step = 5
-            st.rerun()
+  st.markdown("<br>", unsafe_allow_html=True)
+  col1, col2, col3 = st.columns([1, 2, 1])
+  with col2:
+    if st.button("Read Final Keepsake Card ", use_container_width=True):
+      st.session_state.step = 5
+      st.rerun()
 
 # ==========================================
 # STEP 5: ANTIQUE KEEPSAKE CARD & PRAYER
 # ==========================================
 elif st.session_state.step == 5:
-    st.markdown(
-        """
+  st.markdown(
+      """
         <div class="antique-card">
             <p style="letter-spacing: 3px; font-size: 0.85rem; font-weight: 700; color: #102542;">KEEPSAKE BIRTHDAY CARD</p>
             <h1 style="font-family: 'Great Vibes', cursive; font-size: 3.5rem; color: #102542; margin: 5px 0;">Happy 15th Birthday</h1>
@@ -452,16 +489,16 @@ elif st.session_state.step == 5:
                 You are a precious blessing, and I pray that this new chapter brings you countless reasons to smile."
             </p>
             <hr style="border: 0; height: 1.5px; background: #d4af37; margin: 25px auto; width: 40%;">
-            <p style="font-weight: 700; color: #102542;">🤲 Aameen · Stay Happy Always</p>
+            <p style="font-weight: 700; color: #102542;">✨ Aameen · Stay Happy Always 🌟</p>
         </div>
         """,
-        unsafe_allow_html=True,
-    )
+      unsafe_allow_html=True,
+  )
 
-    st.markdown("<br>", unsafe_allow_html=True)
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
-        if st.button("🔄 Replay Surprise", use_container_width=True):
-            st.session_state.step = 1
-            st.session_state.candle_blown = False
-            st.rerun()
+  st.markdown("<br>", unsafe_allow_html=True)
+  col1, col2, col3 = st.columns([1, 2, 1])
+  with col2:
+    if st.button("🔄 Replay Surprise", use_container_width=True):
+      st.session_state.step = 1
+      st.session_state.candle_blown = False
+      st.rerun()
